@@ -20,7 +20,7 @@ Before that
 cp .env.example .env
 ```
 
-and setup the provided credentials based on your need
+and setup the provided credentials based on your need, then
 
 - Run the project: `make run`
 - Stop the project: `make down`
