@@ -8,6 +8,8 @@ export interface MeetingResult {
   participants: string[];
   summary: string;
   tasks?: TaskResult[];
+  transcript?: string;
+  actionItems?: string[];
 }
 
 export interface CreateMeeting {

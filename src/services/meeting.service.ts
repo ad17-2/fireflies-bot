@@ -278,7 +278,18 @@ export const updateTranscript = async (
     { new: true }
   );
 
-  return updatedMeeting;
+  const meetingResult: MeetingResult = {
+    _id: updatedMeeting._id.toString(),
+    title: updatedMeeting.title,
+    date: updatedMeeting.date,
+    duration: updatedMeeting.duration,
+    participants: updatedMeeting.participants,
+    summary: updatedMeeting.summary || "",
+    transcript: updatedMeeting.transcript || "",
+    actionItems: updatedMeeting.actionItems || [],
+  };
+
+  return meetingResult;
 };
 
 export const summarizeMeeting = async (
