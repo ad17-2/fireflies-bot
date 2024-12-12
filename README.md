@@ -38,6 +38,20 @@ src/
 
 ## API Endpoints
 
+### Auth
+
+- `POST /api/auth/login`
+
+  - Description: Login user
+  - Validation: Validates the required fields in the request payload.
+  - Notes : Generic error response given to prevent brutforcing which credentials are at fault [LLM09:2023](https://owasp.org/www-project-top-10-for-large-language-model-applications/Archive/0_1_vulns/Improper_Error_Handling.html)
+
+- `POST /api/auth/register`
+
+  - Description: Creates a new user.
+  - Validation: Validates the required fields in the request payload.
+  - Notes: Password are given maximum 50 chars, to prevent bcrypt overloading at > 72 chars [Bcrypt Max PasswordLength](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length)
+
 ### Meetings
 
 - `GET /api/meetings`

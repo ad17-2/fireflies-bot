@@ -17,15 +17,19 @@ await mongoose
 
 // Sample data
 const userSeedData = [
-  { name: "Alice Smith", email: "alice@example.com", password: "Password123" },
-  { name: "Bob Johnson", email: "bob@example.com", password: "Password123" },
+  { name: "Alice Smith", email: "alice@example.com", password: "Password123!" },
+  { name: "Bob Johnson", email: "bob@example.com", password: "Password123!" },
   {
     name: "Charlie Brown",
     email: "charlie@example.com",
-    password: "Password123",
+    password: "Password123!",
   },
-  { name: "David Wilson", email: "david@example.com", password: "Password123" },
-  { name: "Eva Davis", email: "eva@example.com", password: "Password123" },
+  {
+    name: "David Wilson",
+    email: "david@example.com",
+    password: "Password123!",
+  },
+  { name: "Eva Davis", email: "eva@example.com", password: "Password123!" },
 ];
 
 const participants = [
