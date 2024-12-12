@@ -18,6 +18,7 @@ import {
   UpdateMeetingTranscript,
 } from "../types/meeting.type";
 import { MeetingStats } from "../types/meeting-stats.type";
+import { isValidObjectId } from "mongoose";
 
 export const getMeetingsHandler = async (
   req: AuthenticatedRequest & { query: PaginationQuery },
@@ -28,6 +29,10 @@ export const getMeetingsHandler = async (
       return res.status(401).json({ message: "Unauthorized" });
     }
     const userId = req.user._id;
+
+    if (!isValidObjectId(userId)) {
+      return res.status(400).json({ message: "Invalid user ID" });
+    }
 
     const result = await getMeetings(userId, req.query);
 
@@ -59,6 +64,10 @@ export const getMeetingStatsHandler = async (
 
     const userId = req.user?._id;
 
+    if (!isValidObjectId(userId)) {
+      return res.status(400).json({ message: "Invalid user ID" });
+    }
+
     const stats = await getMeetingStats(userId);
 
     const response: WebResponse<MeetingStats> = {
@@ -83,7 +92,16 @@ export const getMeetingHandler = async (
   if (!req.user) {
     return res.status(401).json({ message: "Unauthorized" });
   }
+
   const userId = req.user._id;
+
+  if (!isValidObjectId(userId)) {
+    return res.status(400).json({ message: "Invalid user ID" });
+  }
+
+  if (!isValidObjectId(req.params.id)) {
+    return res.status(400).json({ message: "Invalid meeting ID" });
+  }
 
   try {
     const meeting = await getMeeting(userId, req.params.id);
@@ -110,6 +128,14 @@ export const getMeetingSentimentHandler = async (
   try {
     const { id } = req.params;
     const userId = req.user?._id;
+
+    if (!isValidObjectId(userId)) {
+      return res.status(400).json({ message: "Invalid user ID" });
+    }
+
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({ message: "Invalid meeting ID" });
+    }
 
     const sentiment = await getMeetingSentiment(userId, id);
 
@@ -178,6 +204,14 @@ export const updateTranscriptHandler = async (
     const { id } = req.params;
     const userId = req.user._id;
 
+    if (!isValidObjectId(userId)) {
+      return res.status(400).json({ message: "Invalid user ID" });
+    }
+
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({ message: "Invalid meeting ID" });
+    }
+
     const transcriptData: UpdateMeetingTranscript = {
       transcript: req.body.transcript,
       summary: req.body.summary,
@@ -215,6 +249,14 @@ export const summarizeMeetingHandler = async (
 
     const { id } = req.params;
     const userId = req.user._id;
+
+    if (!isValidObjectId(userId)) {
+      return res.status(400).json({ message: "Invalid user ID" });
+    }
+
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({ message: "Invalid meeting ID" });
+    }
 
     const result = await summarizeMeeting(userId, id);
 
