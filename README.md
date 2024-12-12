@@ -44,6 +44,10 @@ src/
 └── server.ts
 ```
 
+## API Docs
+
+You can access the API Docs at : `localhost:3000/api-docs`
+
 ## API Endpoints
 
 ### Auth
