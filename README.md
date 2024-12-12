@@ -126,19 +126,6 @@ src/
   - Addressed:
     - Use JWT Token with expiration
 
-- Unfiltered Query
-
-  ```typescript
-  const meetings = await Meeting.find();
-  ```
-
-  - Issues:
-
-    - Lack of Filter: unfiltered query will result in every user will be able to get all the meetings data, which will lead to data leak
-
-  - Addressed:
-    - Added filter when query-ing meetings data
-
 - Request Size Limit
 
   - Issues:
