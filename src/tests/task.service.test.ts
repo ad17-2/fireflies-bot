@@ -1,8 +1,7 @@
 import { jest } from "@jest/globals";
 import { Types } from "mongoose";
-import { createTasksFromActionItems, getTasks } from "../services/task.service";
 import { Task } from "../models/task.model";
-import { validatePagination } from "../utils/pagination.util";
+import { createTasksFromActionItems, getTasks } from "../services/task.service";
 
 jest.mock("../models/task.model", () => ({
   Task: {
