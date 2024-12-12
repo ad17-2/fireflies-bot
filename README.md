@@ -44,7 +44,7 @@ src/
 
   - Description: Login user
   - Validation: Validates the required fields in the request payload.
-  - Notes : Generic error response given to prevent brutforcing which credentials are at fault [LLM09:2023](https://owasp.org/www-project-top-10-for-large-language-model-applications/Archive/0_1_vulns/Improper_Error_Handling.html)
+  - Notes : Generic error response given to prevent brute-forcing which credentials are at fault [LLM09:2023](https://owasp.org/www-project-top-10-for-large-language-model-applications/Archive/0_1_vulns/Improper_Error_Handling.html)
 
 - `POST /api/auth/register`
 
