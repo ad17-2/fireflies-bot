@@ -5,6 +5,7 @@ import { meetingRoutes } from "../routes/api/meeting.route.js";
 import { dashboardRoutes } from "../routes/api/dashboard.route.js";
 import { taskRoutes } from "../routes/api/task.route.js";
 import { authRoutes } from "../routes/api/auth.route.js";
+import { swaggerSetup } from "./swagger.config.js";
 
 export const configureApp = (): Express => {
   const app = express();
@@ -32,6 +33,8 @@ export const configureApp = (): Express => {
   app.use("/api/tasks", authMiddleware, taskRoutes);
   app.use("/api/dashboard", authMiddleware, dashboardRoutes);
   app.use("/api/auth", authRoutes);
+
+  swaggerSetup(app);
 
   return app;
 };
