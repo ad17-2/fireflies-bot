@@ -262,7 +262,7 @@ export const createMeeting = async (
 
 export const updateTranscript = async (
   userId: Types.ObjectId,
-  meetingId: string,
+  meetingId: Types.ObjectId,
   transcriptData: UpdateMeetingTranscript
 ): Promise<MeetingResult | null> => {
   if (!Types.ObjectId.isValid(meetingId)) {
@@ -303,15 +303,13 @@ export const updateTranscript = async (
 
 export const summarizeMeeting = async (
   userId: Types.ObjectId,
-  meetingId: string
+  meetingId: Types.ObjectId
 ): Promise<MeetingSummarize | null> => {
   if (!Types.ObjectId.isValid(meetingId)) {
     return null;
   }
 
-  const id = new Types.ObjectId(meetingId);
-
-  const meeting = await Meeting.findOne({ _id: id, userId });
+  const meeting = await Meeting.findOne({ _id: meetingId, userId });
 
   if (!meeting) {
     return null;
@@ -331,7 +329,11 @@ export const summarizeMeeting = async (
   );
 
   // Create tasks from action items
-  const taskIds = await createTasksFromActionItems(id, userId, actionItems);
+  const taskIds = await createTasksFromActionItems(
+    meetingId,
+    userId,
+    actionItems
+  );
 
   // Update meeting with summary
   const updatedMeeting = await Meeting.findByIdAndUpdate(

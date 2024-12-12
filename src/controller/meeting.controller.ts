@@ -19,6 +19,7 @@ import {
 } from "../types/meeting.type";
 import { MeetingStats } from "../types/meeting-stats.type";
 import { isValidObjectId } from "mongoose";
+import { Types } from "mongoose";
 
 export const getMeetingsHandler = async (
   req: AuthenticatedRequest & { query: PaginationQuery },
@@ -34,7 +35,7 @@ export const getMeetingsHandler = async (
       return res.status(400).json({ message: "Invalid user ID" });
     }
 
-    const result = await getMeetings(userId, req.query);
+    const result = await getMeetings(new Types.ObjectId(userId), req.query);
 
     const response: PaginatedResponse<MeetingResult> = {
       message: "Meetings data fetched successfully",
@@ -68,7 +69,7 @@ export const getMeetingStatsHandler = async (
       return res.status(400).json({ message: "Invalid user ID" });
     }
 
-    const stats = await getMeetingStats(userId);
+    const stats = await getMeetingStats(new Types.ObjectId(userId));
 
     const response: WebResponse<MeetingStats> = {
       message: "Meeting statistics fetched successfully",
@@ -104,7 +105,7 @@ export const getMeetingHandler = async (
   }
 
   try {
-    const meeting = await getMeeting(userId, req.params.id);
+    const meeting = await getMeeting(new Types.ObjectId(userId), req.params.id);
 
     const response: WebResponse<MeetingResult> = {
       message: "Meeting data fetched successfully",
@@ -137,7 +138,7 @@ export const getMeetingSentimentHandler = async (
       return res.status(400).json({ message: "Invalid meeting ID" });
     }
 
-    const sentiment = await getMeetingSentiment(userId, id);
+    const sentiment = await getMeetingSentiment(new Types.ObjectId(userId), id);
 
     if (!sentiment) {
       return res.status(404).json({
@@ -169,6 +170,7 @@ export const createMeetingHandler = async (
     }
 
     const userId = req.user._id;
+
     const meetingData: CreateMeeting = {
       title: req.body.title,
       date: req.body.date,
@@ -176,7 +178,10 @@ export const createMeetingHandler = async (
       participants: req.body.participants,
     };
 
-    const meeting = await createMeeting(userId, meetingData);
+    const meeting = await createMeeting(
+      new Types.ObjectId(userId),
+      meetingData
+    );
 
     const response: WebResponse<MeetingResult> = {
       message: "Meeting created successfully",
@@ -218,7 +223,11 @@ export const updateTranscriptHandler = async (
       actionItems: req.body.actionItems,
     };
 
-    const meeting = await updateTranscript(userId, id, transcriptData);
+    const meeting = await updateTranscript(
+      new Types.ObjectId(userId),
+      new Types.ObjectId(id),
+      transcriptData
+    );
 
     if (!meeting) {
       return res.status(404).json({ message: "Meeting not found" });
@@ -258,7 +267,10 @@ export const summarizeMeetingHandler = async (
       return res.status(400).json({ message: "Invalid meeting ID" });
     }
 
-    const result = await summarizeMeeting(userId, id);
+    const result = await summarizeMeeting(
+      new Types.ObjectId(userId),
+      new Types.ObjectId(id)
+    );
 
     if (!result) {
       return res.status(404).json({ message: "Meeting not found" });

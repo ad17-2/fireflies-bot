@@ -3,6 +3,7 @@ import { getTasks } from "../services/task.service";
 import { AuthenticatedRequest } from "../types/auth.types";
 import { PaginatedResponse, PaginationQuery } from "../types/pagination.type";
 import { TaskResult } from "../types/task.type";
+import { Types } from "mongoose";
 
 export const getTasksHandler = async (
   req: AuthenticatedRequest & { query: PaginationQuery },
@@ -14,7 +15,7 @@ export const getTasksHandler = async (
     }
     const userId = req.user._id;
 
-    const result = await getTasks(userId, req.query);
+    const result = await getTasks(new Types.ObjectId(userId), req.query);
 
     const response: PaginatedResponse<TaskResult> = {
       message: "Tasks data fetched successfully",
