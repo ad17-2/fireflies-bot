@@ -1,23 +1,23 @@
 import { Types } from "mongoose";
-import { PaginatedResponse, PaginationQuery } from "../types/pagination.type";
-import { validatePagination } from "../utils/pagination.util";
 import { Meeting } from "../models/meeting.model";
+import { Task } from "../models/task.model";
+import { AIEmotionResult } from "../types/ai.types";
 import {
   DayOfWeekStats,
   GeneralStats,
   MeetingStats,
   TopParticipant,
 } from "../types/meeting-stats.type";
-import { cacheService } from "./cache.service";
-import { analyzeMeetingEmotion, generateMeetingSummary } from "./ai.service";
-import { AIEmotionResult } from "../types/ai.types";
 import {
   CreateMeeting,
   MeetingResult,
   MeetingSummarize,
   UpdateMeetingTranscript,
 } from "../types/meeting.type";
-import { Task } from "../models/task.model";
+import { PaginationQuery } from "../types/pagination.type";
+import { validatePagination } from "../utils/pagination.util";
+import { analyzeMeetingEmotion, generateMeetingSummary } from "./ai.service";
+import { cacheService } from "./cache.service";
 import { createTasksFromActionItems } from "./task.service";
 
 export const getMeetings = async (
