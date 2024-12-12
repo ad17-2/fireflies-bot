@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { registerUser, loginUser } from "../services/auth.service";
+import { loginUser, registerUser } from "../services/auth.service";
+import { LoginResult, RegisterResult } from "../types/auth.types";
 import { WebResponse } from "../types/response.type";
-import { Login, LoginResult, RegisterResult } from "../types/auth.types";
 
 export const registerHandler = async (req: Request, res: Response) => {
   try {
