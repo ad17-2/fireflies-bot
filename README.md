@@ -96,12 +96,13 @@ src/
 - `GET /api/dashboard`
   - Issue: It attempted to fetch all meetings without filtering by authenticated user.
 
-### Known Issue
+## Known Issues
 
-#### Security Issue
+### Security Issues
+
+#### Authentication
 
 - Authenticating API
-
   ```typescript
   export const authMiddleware = (
     req: AuthenticatedRequest,
@@ -117,49 +118,38 @@ src/
     next();
   };
   ```
-
   - Issues:
-
     - Lack of Token Validation: The middleware relies solely on the presence of an `x-user-id` header to authenticate the request. It doesn't validate the authenticity or integrity of the user ID. Anyone can potentially send a request with any user ID in the header, and the middleware will consider it authenticated.
     - No Encryption or Signature Verification: The user ID is passed in plain text in the header, without any encryption or digital signature. This makes it vulnerable to interception, tampering, or impersonation attacks. An attacker could easily modify or forge the user ID header.
-
   - Addressed:
     - Use JWT Token with expiration
 
-- Request Size Limit
+#### Request Size Limit
 
-  - Issues:
+- Issues:
+  - Lack of Request Size Limit: Not setting up a request size limit could potentially lead to DoS attacks with large payloads.
+- Addressed:
+  - Added Request Size Limit
 
-    - Lack of Request Size Limit: not setting up a request size limit, could potentially lead to DoS attacks with large payloads
+#### Rate Limiter
 
-  - Addressed:
-    - Added Request Size Limit
+- Issues:
+  - Lack of Rate Limiter: Not setting up a rate limiter could potentially lead to DoS attacks with large requests.
+- Addressed:
+  - Added Rate Limiter
 
-- Rate Limiter
+### Performance Issues
 
-  - Issues:
+#### Indexing
 
-    - Lack of Rate Limiter: not setting up a rate limiter, could potentially lead to DoS attacks with large requests
+- Issues:
+  - Lack of Indexing: Not setting up proper indexes can lead to the database querying all data without using an index, which can result in slowdowns when the data scales.
+- Addressed:
+  - Added indexes for queries
 
-  - Addressed:
-    - Added Rate Limiter
+#### Caching
 
-#### Performance Issue
-
-- Indexing
-
-  - Issues:
-
-    - Lack of Indexing: not setting up a proper index will leads the database to query all of the data without using an index, which will result in slow down when the data scales
-
-  - Addressed:
-    - Added index for query
-
-- Caching
-
-  - Issues:
-
-    - Lack of Caching : not setting up a proper caching for supposed to be highly accessed with rarely changes data, will leads to unnecessary query to the database evertime user hits it
-
-  - Addressed:
-    - Added caching for /dashboard, /stats
+- Issues:
+  - Lack of Caching: Not setting up proper caching for frequently accessed data that rarely changes can lead to unnecessary queries to the database every time a user hits the endpoint.
+- Addressed:
+  - Added caching for `/dashboard` and `/stats` endpoints
