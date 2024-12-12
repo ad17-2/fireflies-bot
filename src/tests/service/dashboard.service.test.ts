@@ -1,23 +1,23 @@
 import { jest } from "@jest/globals";
 import { Types } from "mongoose";
-import { getDashboard } from "../services/dashboard.service";
-import { cacheService } from "../services/cache.service";
-import { Meeting } from "../models/meeting.model";
-import { Task } from "../models/task.model";
+import { getDashboard } from "../../services/dashboard.service";
+import { cacheService } from "../../services/cache.service";
+import { Meeting } from "../../models/meeting.model";
+import { Task } from "../../models/task.model";
 
-jest.mock("../models/meeting.model", () => ({
+jest.mock("../../models/meeting.model", () => ({
   Meeting: {
     aggregate: jest.fn(),
   },
 }));
 
-jest.mock("../models/task.model", () => ({
+jest.mock("../../models/task.model", () => ({
   Task: {
     aggregate: jest.fn(),
   },
 }));
 
-jest.mock("../services/cache.service", () => ({
+jest.mock("../../services/cache.service", () => ({
   cacheService: {
     getOrSet: jest.fn(),
   },

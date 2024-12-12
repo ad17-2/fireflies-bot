@@ -1,13 +1,13 @@
 import { jest } from "@jest/globals";
 import jwt from "jsonwebtoken";
 import { Types } from "mongoose";
-import { Register, Login } from "../types/auth.types";
+import { Register, Login } from "../../types/auth.types";
 
 jest.mock("jsonwebtoken", () => ({
   sign: jest.fn(),
 }));
 
-jest.mock("../models/user.model", () => {
+jest.mock("../../models/user.model", () => {
   return {
     User: jest.fn().mockImplementation(() => ({
       email: "",
@@ -17,7 +17,7 @@ jest.mock("../models/user.model", () => {
   };
 });
 
-import { registerUser, loginUser } from "../services/auth.service";
+import { registerUser, loginUser } from "../../services/auth.service";
 
 interface MockUserDocument {
   _id?: Types.ObjectId | string;
@@ -34,7 +34,7 @@ type MockConstructor = {
 } & jest.Mock;
 
 const MockUserConstructor = jest.mocked(
-  require("../models/user.model").User
+  require("../../models/user.model").User
 ) as MockConstructor;
 
 MockUserConstructor.findOne = jest.fn();

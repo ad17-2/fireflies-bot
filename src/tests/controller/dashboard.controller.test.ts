@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
-import { getDashboard } from "../services/dashboard.service";
-import { WebResponse } from "../types/response.type";
-import { DashboardData } from "../types/dashboard.type";
-import { getDashboardHandler } from "../controller/dashboard.controller";
+import { getDashboard } from "../../services/dashboard.service";
+import { WebResponse } from "../../types/response.type";
+import { DashboardData } from "../../types/dashboard.type";
+import { getDashboardHandler } from "../../controller/dashboard.controller";
 import { Types } from "mongoose";
 
-jest.mock("../services/dashboard.service");
+jest.mock("../../services/dashboard.service");
 
 describe("getDashboardHandler", () => {
   let mockRequest: Partial<Request>;

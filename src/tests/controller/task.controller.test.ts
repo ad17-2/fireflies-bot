@@ -1,11 +1,11 @@
 import { Response } from "express";
 import { Types } from "mongoose";
-import { getTasks } from "../services/task.service";
-import { AuthenticatedRequest } from "../types/auth.types";
-import { PaginationQuery } from "../types/pagination.type";
-import { getTasksHandler } from "../controller/task.controller";
+import { getTasks } from "../../services/task.service";
+import { AuthenticatedRequest } from "../../types/auth.types";
+import { PaginationQuery } from "../../types/pagination.type";
+import { getTasksHandler } from "../../controller/task.controller";
 
-jest.mock("../services/task.service", () => ({
+jest.mock("../../services/task.service", () => ({
   getTasks: jest.fn(),
 }));
 

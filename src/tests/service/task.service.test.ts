@@ -1,9 +1,12 @@
 import { jest } from "@jest/globals";
 import { Types } from "mongoose";
-import { Task } from "../models/task.model";
-import { createTasksFromActionItems, getTasks } from "../services/task.service";
+import { Task } from "../../models/task.model";
+import {
+  createTasksFromActionItems,
+  getTasks,
+} from "../../services/task.service";
 
-jest.mock("../models/task.model", () => ({
+jest.mock("../../models/task.model", () => ({
   Task: {
     insertMany: jest.fn(),
     find: jest.fn(),

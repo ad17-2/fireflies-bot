@@ -105,7 +105,10 @@ export const getMeetingHandler = async (
   }
 
   try {
-    const meeting = await getMeeting(new Types.ObjectId(userId), req.params.id);
+    const meeting = await getMeeting(
+      new Types.ObjectId(userId),
+      new Types.ObjectId(req.params.id)
+    );
 
     const response: WebResponse<MeetingResult> = {
       message: "Meeting data fetched successfully",
@@ -138,7 +141,10 @@ export const getMeetingSentimentHandler = async (
       return res.status(400).json({ message: "Invalid meeting ID" });
     }
 
-    const sentiment = await getMeetingSentiment(new Types.ObjectId(userId), id);
+    const sentiment = await getMeetingSentiment(
+      new Types.ObjectId(userId),
+      new Types.ObjectId(id)
+    );
 
     if (!sentiment) {
       return res.status(404).json({

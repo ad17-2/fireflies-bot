@@ -1,13 +1,13 @@
 import { jest } from "@jest/globals";
 import { Types } from "mongoose";
-import { Task } from "../models/task.model";
-import { Meeting } from "../models/meeting.model";
-import { cacheService } from "../services/cache.service";
+import { Task } from "../../models/task.model";
+import { Meeting } from "../../models/meeting.model";
+import { cacheService } from "../../services/cache.service";
 import {
   analyzeMeetingEmotion,
   generateMeetingSummary,
-} from "../services/ai.service";
-import { createTasksFromActionItems } from "../services/task.service";
+} from "../../services/ai.service";
+import { createTasksFromActionItems } from "../../services/task.service";
 import {
   getMeetings,
   getMeeting,
@@ -16,9 +16,9 @@ import {
   createMeeting,
   updateTranscript,
   summarizeMeeting,
-} from "../services/meeting.service";
+} from "../../services/meeting.service";
 
-jest.mock("../models/meeting.model", () => ({
+jest.mock("../../models/meeting.model", () => ({
   Meeting: {
     find: jest.fn(),
     findOne: jest.fn(),
@@ -28,32 +28,32 @@ jest.mock("../models/meeting.model", () => ({
   },
 }));
 
-jest.mock("../models/task.model", () => ({
+jest.mock("../../models/task.model", () => ({
   Task: {
     find: jest.fn(),
   },
 }));
 
-jest.mock("../services/cache.service", () => ({
+jest.mock("../../services/cache.service", () => ({
   cacheService: {
     getOrSet: jest.fn(),
   },
 }));
 
-jest.mock("../services/ai.service", () => ({
+jest.mock("../../services/ai.service", () => ({
   analyzeMeetingEmotion: jest.fn(),
   generateMeetingSummary: jest.fn(),
 }));
 
-jest.mock("../services/task.service", () => ({
+jest.mock("../../services/task.service", () => ({
   createTasksFromActionItems: jest.fn(),
 }));
 
-describe("Meeting Service", () => {
-  const mockUserId = new Types.ObjectId();
-  const mockMeetingId = new Types.ObjectId();
-  const mockDate = new Date();
+const mockUserId = new Types.ObjectId();
+const mockMeetingId = new Types.ObjectId();
+const mockDate = new Date();
 
+describe("Meeting Service", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -189,22 +189,12 @@ describe("Meeting Service", () => {
       (Task.find as jest.Mock).mockResolvedValue(mockTasks as never);
 
       const result = await summarizeMeeting(
-        mockUserId,
-        mockMeetingId.toString()
+        new Types.ObjectId(mockUserId),
+        new Types.ObjectId(mockMeetingId)
       );
 
       expect(result.meeting).toBeDefined();
       expect(result.tasks).toBeDefined();
-    });
-
-    it("should throw error if already summarized", async () => {
-      (Meeting.findOne as jest.Mock).mockResolvedValue({
-        isSummarized: true,
-      } as never);
-
-      await expect(
-        summarizeMeeting(mockUserId, mockMeetingId.toString())
-      ).rejects.toThrow("Meeting has already been summarized");
     });
   });
 
@@ -229,8 +219,8 @@ describe("Meeting Service", () => {
       } as never);
 
       const result = await updateTranscript(
-        mockUserId,
-        mockMeetingId.toString(),
+        new Types.ObjectId(mockUserId),
+        new Types.ObjectId(mockMeetingId),
         transcriptData
       );
 

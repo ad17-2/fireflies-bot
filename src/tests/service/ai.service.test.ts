@@ -1,7 +1,7 @@
 import {
   analyzeMeetingEmotion,
   generateMeetingSummary,
-} from "../services/ai.service";
+} from "../../services/ai.service";
 
 describe("AI Service", () => {
   it("should return emotion scores", async () => {
