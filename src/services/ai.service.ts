@@ -27,9 +27,11 @@ export const analyzeMeetingEmotion = async (): Promise<AIEmotionResult> => {
   let anger = Math.random() * (1 - joy);
   let sadness = 1 - joy - anger;
 
-  return {
+  const aiMeetingEmotionResult: AIEmotionResult = {
     joy: Number(joy.toFixed(2)),
     anger: Number(anger.toFixed(2)),
     sadness: Number(sadness.toFixed(2)),
   };
+
+  return aiMeetingEmotionResult;
 };

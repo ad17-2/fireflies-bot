@@ -40,22 +40,5 @@
     "@babel/preset-env": "^7.23.7",
     "@babel/preset-typescript": "^7.23.7",
     "babel-jest": "^29.7.0"
-  },
-  "jest": {
-    "preset": "ts-jest/presets/default-esm",
-    "moduleNameMapper": {
-      "^(\\.{1,2}/.*)\\.js$": "$1"
-    },
-    "transform": {
-      "^.+\\.tsx?$": [
-        "ts-jest",
-        {
-          "useESM": true
-        }
-      ]
-    },
-    "extensionsToTreatAsEsm": [
-      ".ts"
-    ]
   }
 }

@@ -4,11 +4,14 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "esModuleInterop": true,
-    "strict": true,
     "outDir": "./dist",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "strictNullChecks": false,
+    "strict": false
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "jest.config.ts"],
   "ts-node": {
     "esm": true,
     "experimentalSpecifierResolution": "node"

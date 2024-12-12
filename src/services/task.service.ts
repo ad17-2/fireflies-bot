@@ -1,8 +1,8 @@
 import { Types } from "mongoose";
-import { Task } from "../models/task.model.js";
-import { PaginationQuery } from "../types/pagination.type.js";
-import { validatePagination } from "../utils/pagination.util.js";
-import { TaskResult } from "../types/task.type.js";
+import { PaginationQuery } from "../types/pagination.type";
+import { validatePagination } from "../utils/pagination.util";
+import { TaskResult } from "../types/task.type";
+import { Task } from "../models/task.model";
 
 export const createTasksFromActionItems = async (
   meetingId: Types.ObjectId,
@@ -35,10 +35,7 @@ export const getTasks = async (
   const { page, limit } = validatePagination(query);
 
   const [tasks, total] = await Promise.all([
-    Task.find(
-      { userId },
-      "_id title description status dueDate createdAt updatedAt"
-    )
+    Task.find({ userId }, "_id title description status dueDate")
       .limit(limit)
       .skip((page - 1) * limit)
       .sort({ createdAt: -1 })
@@ -46,8 +43,16 @@ export const getTasks = async (
     Task.countDocuments({ userId }),
   ]);
 
+  const taskResults: TaskResult[] = tasks.map((task) => ({
+    _id: task._id.toString(),
+    title: task.title,
+    description: task.description || "",
+    status: task.status,
+    dueDate: task.dueDate,
+  }));
+
   return {
-    tasks,
+    tasks: taskResults,
     total,
     page,
     limit,

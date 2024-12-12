@@ -87,7 +87,7 @@ export const getMeetingSentiment = async (
   }).exec();
 
   if (meeting) {
-    const sentiment = await analyzeMeetingEmotion();
+    const sentiment: AIEmotionResult = await analyzeMeetingEmotion();
     return sentiment;
   }
 

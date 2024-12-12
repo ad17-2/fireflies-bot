@@ -4,6 +4,4 @@ export interface TaskResult {
   description: string;
   status: string;
   dueDate: Date;
-  createdAt: Date;
-  updatedAt: Date;
 }
