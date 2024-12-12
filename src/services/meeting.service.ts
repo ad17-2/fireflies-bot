@@ -32,17 +32,24 @@ export const getMeetings = async (
   const { page, limit } = validatePagination(query);
 
   const [meetings, total] = await Promise.all([
-    Meeting.find(
-      { userId },
-      "_id title date duration participants summary createdAt updatedAt"
-    )
+    Meeting.find({ userId }, "_id title date duration participants summary")
       .limit(limit)
       .skip((page - 1) * limit)
       .sort({ date: -1 }),
     Meeting.countDocuments({ userId }),
   ]);
+
+  const meetingResults: MeetingResult[] = meetings.map((meeting) => ({
+    _id: meeting._id.toString(),
+    title: meeting.title,
+    date: meeting.date,
+    duration: meeting.duration,
+    participants: meeting.participants,
+    summary: meeting.summary || "",
+  }));
+
   return {
-    meetings,
+    meetings: meetingResults,
     total,
     page,
     limit,
