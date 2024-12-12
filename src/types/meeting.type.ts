@@ -7,9 +7,7 @@ export interface MeetingResult {
   duration: number;
   participants: string[];
   summary: string;
-  createdAt: Date;
-  updatedAt: Date;
-  tasks: TaskResult[];
+  tasks?: TaskResult[];
 }
 
 export interface CreateMeeting {

@@ -78,8 +78,17 @@ export const getMeeting = async (
     return null;
   }
 
+  const meetingResult: MeetingResult = {
+    _id: meeting._id.toString(),
+    title: meeting.title,
+    date: meeting.date,
+    duration: meeting.duration,
+    participants: meeting.participants,
+    summary: meeting.summary || "",
+  };
+
   return {
-    ...meeting,
+    ...meetingResult,
     tasks,
   };
 };
@@ -229,7 +238,17 @@ export const createMeeting = async (
   });
 
   const savedMeeting = await newMeeting.save();
-  return savedMeeting;
+
+  const meetingResult: MeetingResult = {
+    _id: savedMeeting._id.toString(),
+    title: savedMeeting.title,
+    date: savedMeeting.date,
+    duration: savedMeeting.duration,
+    participants: savedMeeting.participants,
+    summary: savedMeeting.summary || "",
+  };
+
+  return meetingResult;
 };
 
 export const updateTranscript = async (
