@@ -14,6 +14,14 @@ Ensure that you have Docker installed. If you don't have Docker yet, refer to th
 
 Once you have Docker enabled, you can use the provided Makefile for easy project management.
 
+Before that
+
+```
+cp .env.example .env
+```
+
+and setup the provided credentials based on your need
+
 - Run the project: `make run`
 - Stop the project: `make down`
 - Run tests: `make test`
