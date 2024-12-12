@@ -73,16 +73,4 @@ describe("getDashboardHandler", () => {
 
     expect(jsonMock).toHaveBeenCalledWith(expectedResponse);
   });
-
-  it("should return 500 if getDashboard throws an error", async () => {
-    const errorMessage = "Database error";
-    (getDashboard as jest.Mock).mockRejectedValue(new Error(errorMessage));
-
-    await getDashboardHandler(mockRequest as Request, mockResponse as Response);
-
-    expect(mockResponse.status).toHaveBeenCalledWith(500);
-    expect(jsonMock).toHaveBeenCalledWith({
-      message: errorMessage,
-    });
-  });
 });

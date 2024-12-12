@@ -19,6 +19,7 @@ import { validatePagination } from "../utils/pagination.util";
 import { analyzeMeetingEmotion, generateMeetingSummary } from "./ai.service";
 import { cacheService } from "./cache.service";
 import { createTasksFromActionItems } from "./task.service";
+import { TaskResult } from "../types/task.type";
 
 export const getMeetings = async (
   userId: Types.ObjectId,
@@ -87,9 +88,17 @@ export const getMeeting = async (
     summary: meeting.summary || "",
   };
 
+  const taskResults: TaskResult[] = tasks.map((task) => ({
+    _id: task._id.toString(),
+    title: task.title,
+    description: task.description || "",
+    status: task.status,
+    dueDate: task.dueDate,
+  }));
+
   return {
     ...meetingResult,
-    tasks,
+    tasks: taskResults,
   };
 };
 
@@ -300,7 +309,9 @@ export const summarizeMeeting = async (
     return null;
   }
 
-  const meeting = await Meeting.findOne({ _id: meetingId, userId });
+  const id = new Types.ObjectId(meetingId);
+
+  const meeting = await Meeting.findOne({ _id: id, userId });
 
   if (!meeting) {
     return null;
@@ -320,11 +331,7 @@ export const summarizeMeeting = async (
   );
 
   // Create tasks from action items
-  const taskIds = await createTasksFromActionItems(
-    meeting._id,
-    userId,
-    actionItems
-  );
+  const taskIds = await createTasksFromActionItems(id, userId, actionItems);
 
   // Update meeting with summary
   const updatedMeeting = await Meeting.findByIdAndUpdate(
@@ -344,8 +351,27 @@ export const summarizeMeeting = async (
     _id: { $in: taskIds },
   });
 
+  const meetingResult: MeetingResult = {
+    _id: updatedMeeting._id.toString(),
+    title: updatedMeeting.title,
+    date: updatedMeeting.date,
+    duration: updatedMeeting.duration,
+    participants: updatedMeeting.participants,
+    summary: updatedMeeting.summary || "",
+    transcript: updatedMeeting.transcript || "",
+    actionItems: updatedMeeting.actionItems || [],
+  };
+
+  const taskResults: TaskResult[] = createdTasks.map((task) => ({
+    _id: task._id.toString(),
+    title: task.title,
+    description: task.description || "",
+    status: task.status,
+    dueDate: task.dueDate,
+  }));
+
   return {
-    meeting: updatedMeeting,
-    tasks: createdTasks,
+    meeting: meetingResult,
+    tasks: taskResults,
   };
 };
