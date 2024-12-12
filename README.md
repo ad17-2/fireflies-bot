@@ -22,7 +22,7 @@ cp .env.example .env
 
 and setup the provided credentials based on your need, then
 
-- Run the project: `make run`
+- Run the project: `make up`
 - Stop the project: `make down`
 - Run tests: `make test`
 
