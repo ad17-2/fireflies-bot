@@ -50,7 +50,7 @@ src/
 
   - Description: Creates a new user.
   - Validation: Validates the required fields in the request payload.
-  - Notes: Password are given maximum 50 chars, to prevent bcrypt overloading at > 72 chars [Bcrypt Max PasswordLength](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length)
+  - Notes: Password are given maximum 50 chars, to prevent bcrypt overloading at > 72 chars [Bcrypt Max Password Length](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length)
 
 ### Meetings
 
